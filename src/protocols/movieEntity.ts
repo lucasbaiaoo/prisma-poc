@@ -5,3 +5,5 @@ export type MovieEntity = {
     genre: string,
     already_watched: boolean
 }
+
+export type MovieId = Omit<MovieEntity, "name" | "streaming_service" | "genre" | "already_watched">
