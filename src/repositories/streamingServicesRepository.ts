@@ -1,7 +1,11 @@
-import { QueryResult } from "pg";
-import connectionDB from "../database/db.js";
-import { StreamingServiceId } from "../protocols/streamingServiceEntity.js";
+import { Prisma, streaming_services } from "@prisma/client";
+import prisma from "../database/db.js"
 
-export function getStreamingIdRepository(streamingService: string): Promise<QueryResult<StreamingServiceId>> {
-    return connectionDB.query("SELECT id FROM streaming_services WHERE name = $1;", [streamingService])
+
+export function getStreamingServiceIdRepository(streamingService:string): Prisma.Prisma__streaming_servicesClient<streaming_services, never>{
+    return prisma.streaming_services.findUnique({
+        where: {
+            name: streamingService
+        }
+    })
 }

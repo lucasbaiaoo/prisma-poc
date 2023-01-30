@@ -11,8 +11,8 @@ export async function movieMiddleware(req: Request, res: Response, next: NextFun
     try{
         const movies = await moviesConflictVerificationRepository();
 
-        for(let i = 0; i < movies.rows.length; i++){
-            if(movies.rows[i].name === name && movies.rows[i].streaming_service === streamingService && movies.rows[i].genre === genre){
+        for(let i = 0; i < movies.length; i++){
+            if(movies[i].name === name && movies[i].streaming_services.name === streamingService && movies[i].genres.name === genre){
                 res.sendStatus(409);
                 return;
             }

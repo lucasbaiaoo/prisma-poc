@@ -6,8 +6,15 @@ export async function getMoviesByIdController(req: Request, res: Response): Prom
     
     try{
         const movieById = await getMovieByIdRepository(id);
+        const orderedMovieById = movieById.map((movie) => ({
+            id: movie.id,
+            name: movie.name,
+            streamingService: movie.streaming_services.name,
+            genre: movie.genres.name,
+            alreadyWatched: movie.already_watched 
+        }))
 
-        res.status(200).send(movieById.rows)
+        res.status(200).send(orderedMovieById)
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

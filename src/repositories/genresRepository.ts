@@ -1,7 +1,10 @@
-import { QueryResult } from "pg";
-import connectionDB from "../database/db.js";
-import { GenreId } from "../protocols/genreEntity.js";
+import prisma from "../database/db.js"
+import { genres, Prisma } from "@prisma/client";
 
-export function getGenreIdRepository(genre: string): Promise<QueryResult<GenreId>> {
-    return connectionDB.query("SELECT id FROM genres WHERE name = $1;", [genre])
+export function getGenreIdRepository(genre:string): Prisma.Prisma__genresClient<genres, never>{
+    return prisma.genres.findUnique({
+        where: {
+            name: genre
+        }
+    })
 }

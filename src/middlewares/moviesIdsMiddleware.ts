@@ -8,8 +8,8 @@ export async function moviesIdsMiddleware(req: Request, res: Response, next: Nex
         const moviesIds = await getMoviesIdsRepository();
         let arrayMoviesIds: number[] = [];
 
-        for(let i = 0; i < moviesIds.rows.length; i++){
-            arrayMoviesIds.push(moviesIds.rows[i].id)
+        for(let i = 0; i < moviesIds.length; i++){
+            arrayMoviesIds.push(moviesIds[i].id)
         }
 
         if(arrayMoviesIds.includes(id) === false){

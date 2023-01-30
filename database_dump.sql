@@ -35,6 +35,22 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: _prisma_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public._prisma_migrations (
+    id character varying(36) NOT NULL,
+    checksum character varying(64) NOT NULL,
+    finished_at timestamp with time zone,
+    migration_name character varying(255) NOT NULL,
+    logs text,
+    rolled_back_at timestamp with time zone,
+    started_at timestamp with time zone DEFAULT now() NOT NULL,
+    applied_steps_count integer DEFAULT 0 NOT NULL
+);
+
+
+--
 -- Name: genres; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -149,10 +165,16 @@ ALTER TABLE ONLY public.streaming_services ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public._prisma_migrations VALUES ('2897ea48-fdf6-400e-956f-6e9e35ef2885', 'dc0aaec771b2aa07fe740e700481793fe64a6274a0205fb6f4394b5fe029a7d0', '2023-01-30 10:57:54.139045+00', '20230130105033_create_db_structure', '', NULL, '2023-01-30 10:57:54.139045+00', 0);
+
+
+--
 -- Data for Name: genres; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.genres VALUES (1, 'Sci-Fi');
 INSERT INTO public.genres VALUES (2, 'Animação');
 
 
@@ -160,14 +182,13 @@ INSERT INTO public.genres VALUES (2, 'Animação');
 -- Data for Name: movies; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.movies VALUES (2, 'Castelo Animado', 2, 2, false);
+INSERT INTO public.movies VALUES (5, 'A Viagem de Chihiro', 2, 2, false);
 
 
 --
 -- Data for Name: streaming_services; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.streaming_services VALUES (1, 'Disney+');
 INSERT INTO public.streaming_services VALUES (2, 'Netflix');
 
 
@@ -182,7 +203,7 @@ SELECT pg_catalog.setval('public.genres_id_seq', 2, true);
 -- Name: movies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.movies_id_seq', 2, true);
+SELECT pg_catalog.setval('public.movies_id_seq', 5, true);
 
 
 --
@@ -190,6 +211,22 @@ SELECT pg_catalog.setval('public.movies_id_seq', 2, true);
 --
 
 SELECT pg_catalog.setval('public.streaming_services_id_seq', 2, true);
+
+
+--
+-- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public._prisma_migrations
+    ADD CONSTRAINT _prisma_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: genres genres_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT genres_name_key UNIQUE (name);
 
 
 --
@@ -206,6 +243,14 @@ ALTER TABLE ONLY public.genres
 
 ALTER TABLE ONLY public.movies
     ADD CONSTRAINT movies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: streaming_services streaming_services_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.streaming_services
+    ADD CONSTRAINT streaming_services_name_key UNIQUE (name);
 
 
 --
